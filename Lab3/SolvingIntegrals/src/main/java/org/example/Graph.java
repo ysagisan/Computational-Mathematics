@@ -26,7 +26,7 @@ public class Graph extends JFrame {
         for (int n : nValues) {
             XYSeries series = new XYSeries("n = " + n);
 
-            double h = (b - a) / 100.0;  // количество точек для построения графика
+            double h = (b - a) / n;  // количество точек для построения графика
             for (double x = a; x <= b; x += h) {
                 double integralValue = integration.simpsonMethod(a, x, n);  // Вычисляем значение интеграла на отрезке
                 series.add(x, integralValue);
@@ -48,6 +48,4 @@ public class Graph extends JFrame {
         panel.setPreferredSize(new Dimension(800, 600));
         setContentPane(panel);
     }
-
-
 }

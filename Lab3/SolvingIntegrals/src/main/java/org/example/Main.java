@@ -10,11 +10,11 @@ public class Main {
         double analitResFunc1 = 1.295836866004329;
         double analitResFunc2 = 1.321958688394446;
 
-        double finalResTrap = res.trapezoidMethod(0, 2, 10);
-        double finalResSimp = res.simpsonMethod(0,2,10);
+        double finalResTrap = res.trapezoidMethod(0, 2, 2);
+        double finalResSimp = res.simpsonMethod(0,2,2);
 
-        double err1 = res.rungeTrapezoidError(0, 2, 10, 4);
-        double err2 = res.rungeSimpsonError(0, 2, 10, 4);
+        double err1 = res.rungeTrapezoidError(0, 2, 2, 4);
+        double err2 = res.rungeSimpsonError(0, 2, 2, 4);
 
         double errTrap = Math.abs(finalResTrap - analitResFunc1);
         double errSimp = Math.abs(finalResSimp - analitResFunc1);
@@ -32,7 +32,7 @@ public class Main {
             example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
             // Построение графика с разными значениями n (разбиений)
-            int[] nValues = {2, 6, 10}; // Массив значений для количества разбиений
+            int[] nValues = {2, 4, 8}; // Массив значений для количества разбиений
             example.plotGraph(0, 2, nValues);  // Строим график на отрезке [0, 2]
             example.setVisible(true);
         });
