@@ -2,7 +2,10 @@ package org.example;
 
 public class NumericalIntegration {
 
-    public static double function1(double x) {
+    double analitResFunc1 = 1.295836866004329;
+    double analitResFunc2 = 1.321958688394446;
+
+    public  double function1(double x) {
         return Math.log(1 + x);
         //return Math.exp(x) * Math.cos(x);
     }
@@ -38,15 +41,29 @@ public class NumericalIntegration {
         return res;
     }
 
-    public double rungeTrapezoidError(double a, double b, int n, int p) {
+    public double calculateOrderTrapezoid(double a, double b, int n) {
         double I_h = trapezoidMethod(a, b, n);
-        double I_h2 = trapezoidMethod(a, b, 2 * n);
-        return Math.abs(I_h2 - I_h) / (Math.pow(2, p) - 1);
+        double I_h0_5 = trapezoidMethod(a, b, n/2);
+        double res = Math.abs(Math.log((I_h - analitResFunc1) / (I_h0_5 - analitResFunc1)) / Math.log(2));
+        return res;
     }
 
-    public double rungeSimpsonError(double a, double b, int n, int p) {
+    public double calculateOrderSimpson(double a, double b, int n) {
+        double I_h = simpsonMethod(a, b, n);
+        double I_h0_5 = simpsonMethod(a, b, n/2);
+        double res = Math.abs(Math.log((I_h - analitResFunc1) / (I_h0_5 - analitResFunc1)) / Math.log(2));
+        return res;
+    }
+
+    public double rungeTrapezoidError(double a, double b, int n) {
+        double I_h = trapezoidMethod(a, b, n);
+        double I_h2 = trapezoidMethod(a, b, 2 * n);
+        return Math.abs(I_h2 - I_h) / (Math.pow(2, calculateOrderTrapezoid(a, b, n)) - 1);
+    }
+
+    public double rungeSimpsonError(double a, double b, int n) {
         double I_h = simpsonMethod(a, b, n);
         double I_h2 = simpsonMethod(a, b, 2 * n);
-        return Math.abs(I_h2 - I_h) / (Math.pow(2, p) - 1);
+        return Math.abs(I_h2 - I_h) / (Math.pow(2, calculateOrderSimpson(a, b, n)) - 1);
     }
 }

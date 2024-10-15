@@ -18,6 +18,14 @@ public class Graph extends JFrame {
         this.integration = new NumericalIntegration();
     }
 
+    public double analyticalAntiderivative1(double x) {
+        return Math.log(x + 1) * (x + 1) - x;
+    }
+
+    public double analyticalAntiderivative2(double x) {
+        return (Math.exp(x) * (Math.sin(x) + Math.cos(x)) - 1) / 2 ;
+    }
+
     // Метод для построения графика первообразной функции
     public void plotGraph(double a, double b, int[] nValues) {
         XYSeriesCollection dataset = new XYSeriesCollection();
@@ -31,9 +39,17 @@ public class Graph extends JFrame {
                 double integralValue = integration.simpsonMethod(a, x, n);  // Вычисляем значение интеграла на отрезке
                 series.add(x, integralValue);
             }
-
             dataset.addSeries(series); // Добавляем данные для каждой сетки
         }
+
+        // Добавляем график самой функции
+        XYSeries functionSeries = new XYSeries("Original Function f(x)");
+        double h = (b - a) / 10000.0;  // Используем шаг для более гладкого графика функции
+        for (double x = a; x <= b; x += h) {
+            functionSeries.add(x, analyticalAntiderivative1(x));  // Добавляем значения f(x)
+        }
+        dataset.addSeries(functionSeries);  // Добавляем данные для исходной функции
+
 
         // Создание графика
         JFreeChart chart = ChartFactory.createXYLineChart(
